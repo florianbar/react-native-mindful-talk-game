@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import { MINDFUL_TALK_CARDS } from './data/cards';
-import Card from './components/card';
+import Cards from './components/cards';
 import Button from './components/button';
 
 
 export default function App() {
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedQuestion, setSelectedQuestion] = useState("");
+  const [selectedCard, setSelectedCard] = useState();
 
-  function getRandomQuestion(type) {
+  function getRandomCard(type) {
     let questionType = type;
 
     if (!type) {
@@ -21,22 +20,22 @@ export default function App() {
     const randomQuestionIndex = Math.floor(Math.random() * MINDFUL_TALK_CARDS[questionType].length);
     const randomQuestion = MINDFUL_TALK_CARDS[questionType][randomQuestionIndex];
 
-    setSelectedType(questionType);
-    setSelectedQuestion(randomQuestion);
+    return { 
+      id: Math.random(),
+      type: questionType,
+      question: randomQuestion
+    };
   }
 
-  function makeFirstLetterUppercase(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  function setCurrentAndNextCard() {
+    setSelectedCard(getRandomCard());
   }
 
   return (
     <View style={styles.screen}>
       <View style={styles.main}>
-        {selectedType && selectedQuestion ? (
-          <Card 
-            type={makeFirstLetterUppercase(selectedType)} 
-            question={selectedQuestion} 
-          />
+        {selectedCard ? (
+          <Cards newCard={selectedCard} />
         ) : (
           <Text style={styles.noCardSelectedText}>
             Press the button below to choose the first card
@@ -51,8 +50,8 @@ export default function App() {
               {makeFirstLetterUppercase(type)}
             </Button>
           ))} */}
-          <Button onPress={() => getRandomQuestion()}>
-              Choose a Card
+          <Button onPress={() => setCurrentAndNextCard()}>
+              Next Card
             </Button>
         </View>
       </View>
@@ -69,9 +68,6 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 16,
     width: '100%',
   },
