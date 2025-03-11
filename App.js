@@ -47,10 +47,7 @@ export default function App() {
               {makeFirstLetterUppercase(type)}
             </Button>
           ))} */}
-          <Button 
-            style={{ width: "100%" }}
-            onPress={() => getRandomQuestion()}
-          >
+          <Button onPress={() => getRandomQuestion()}>
               Choose a Card
             </Button>
         </View>
