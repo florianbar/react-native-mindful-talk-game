@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 
-import { ANIM_DURATION } from './constants';
+import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from './constants';
 
 export default function Card({ index, question, type, isSlidingOut }) {
-    const slideAnim = useRef(new Animated.Value(0)).current;
+    const slideAnim = useRef(new Animated.Value(-(CARD_WIDTH/2))).current;
 
     const slideOut = () => {
         Animated.timing(slideAnim, {
@@ -24,35 +24,38 @@ export default function Card({ index, question, type, isSlidingOut }) {
 
     return (
         <Animated.View
-            style={{
-                transform: [{ translateX: isSlidingOut ? slideAnim : 0 }],
-                zIndex: 100 - index,
-            }}
+            style={[
+                styles.card,
+                {
+                    transform: [
+                        { translateX: isSlidingOut ? slideAnim : -(CARD_WIDTH/2) },
+                        { translateY: -(CARD_HEIGHT/2) }
+                    ],
+                    zIndex: 100 - index,
+                }
+            ]}
         >
-            <View style={styles.card}>
-                <View style={styles.cardBody}>
-                    <Text style={styles.cardQuestion}>
-                        {question}
-                    </Text>
-                </View>
-                <View style={styles.cardFooter}>
-                    <Text style={styles.cardType}>
-                        {type}
-                    </Text>
-                </View>
+            <View style={styles.cardBody}>
+                <Text style={styles.cardQuestion}>
+                    {question}
+                </Text>
+            </View>
+            <View style={styles.cardFooter}>
+                <Text style={styles.cardType}>
+                    {type}
+                </Text>
             </View>
         </Animated.View>
     );
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     card: {
         position: 'absolute',
-        top: 0,
+        top: '50%',
         left: '50%',
-        transform: [{ translateX: -160 }, { translateY: '50%' }],
-        width: 320,
-        height: 400,
+        width: CARD_WIDTH,
+        height: CARD_HEIGHT,
         padding: 24,
         backgroundColor: 'white',
         borderRadius: 16,
@@ -68,9 +71,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    cardFooter: {
-      
-    },
+    cardFooter: {},
     cardQuestion: {
         fontSize: 22,
         lineHeight: 34,

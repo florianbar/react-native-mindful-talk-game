@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ANIM_DURATION } from './constants';
-import Card, { styles as cardStyles } from './card';
+import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from './constants';
+import Card from './card';
 
 export default function Cards({ newCard }) {
     const [cardList, setCardList] = useState([]);
@@ -31,6 +31,7 @@ export default function Cards({ newCard }) {
 
     return (
         <View style={styles.cards}>
+            <View style={styles.cardsBase} />
             {cardList.map((card, index) => {
                 const isSlidingOut = index === 0 && cardList.length > 1;
                 return (
@@ -43,7 +44,6 @@ export default function Cards({ newCard }) {
                     />
                 );
             })}
-            <View style={styles.cardsBase} />
         </View>
     );
 }
@@ -54,11 +54,20 @@ const styles = StyleSheet.create({
         position: 'relative',       
     },
     cardsBase: {
-        ...cardStyles.card,
-        elevation: 20,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: CARD_WIDTH,
+        height: CARD_HEIGHT,
+        transform: [
+            { translateX: -(CARD_WIDTH/2) },
+            { translateY: -(CARD_HEIGHT/2) }
+        ],
+        padding: 24,
+        borderRadius: 16,
         shadowColor: 'black',
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.25,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
         shadowRadius: 16,
     },
 });
