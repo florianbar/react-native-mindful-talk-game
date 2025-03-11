@@ -1,12 +1,12 @@
 
 
-import { useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, Text, View, Animated, useAnimatedValue } from 'react-native';
 
 import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from './constants';
 
 export default function Card({ index, question, type, isSlidingOut }) {
-    const slideAnim = useRef(new Animated.Value(-(CARD_WIDTH/2))).current;
+    const slideAnim = useAnimatedValue(-(CARD_WIDTH/2));
 
     const slideOut = () => {
         Animated.timing(slideAnim, {
