@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 import { MINDFUL_TALK_CARDS } from './data/cards';
 import Card from './components/card';
@@ -32,11 +32,15 @@ export default function App() {
   return (
     <View style={styles.screen}>
       <View style={styles.main}>
-        {selectedType && selectedQuestion && (
+        {selectedType && selectedQuestion ? (
           <Card 
             type={makeFirstLetterUppercase(selectedType)} 
             question={selectedQuestion} 
           />
+        ) : (
+          <Text style={styles.noCardSelectedText}>
+            Press the button below to choose the first card
+          </Text>
         )}
       </View>
 
@@ -68,12 +72,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 4,
+    padding: 16,
     width: '100%',
   },
   footer: {
-    padding: 4,
+    padding: 16,
     width: '100%',
+  },
+  noCardSelectedText: {
+    width: '75%',
+    fontSize: 22,
+    lineHeight: 34,
+    textAlign: 'center',
+    color: '#1262b3',
   },
   buttonContainer: {},
 });
