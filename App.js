@@ -5,9 +5,13 @@ import { MINDFUL_TALK_CARDS } from './data/cards';
 import Cards from './components/cards';
 import Button from './components/button';
 
+const COVER_CARD = {
+  type: "cover",
+  id: Math.random(),
+};
 
 export default function App() {
-  const [selectedCard, setSelectedCard] = useState();
+  const [selectedCard, setSelectedCard] = useState(COVER_CARD);
 
   function getRandomCard(type) {
     let questionType = type;
@@ -21,6 +25,7 @@ export default function App() {
     const randomQuestion = MINDFUL_TALK_CARDS[questionType][randomQuestionIndex];
 
     return { 
+      type: "question",
       id: Math.random(),
       type: questionType,
       question: randomQuestion

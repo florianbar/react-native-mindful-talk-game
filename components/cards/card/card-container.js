@@ -1,11 +1,11 @@
 
 
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, Animated, useAnimatedValue } from 'react-native';
+import { StyleSheet, Animated, useAnimatedValue } from 'react-native';
 
-import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from './constants';
+import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from '../constants';
 
-export default function Card({ index, question, type, isSlidingOut }) {
+export default function CardContainer({ children, isSlidingOut, index }) {
     const slideAnim = useAnimatedValue(-(CARD_WIDTH/2));
 
     const slideOut = () => {
@@ -35,16 +35,7 @@ export default function Card({ index, question, type, isSlidingOut }) {
                 }
             ]}
         >
-            <View style={styles.cardBody}>
-                <Text style={styles.cardQuestion}>
-                    {question}
-                </Text>
-            </View>
-            <View style={styles.cardFooter}>
-                <Text style={styles.cardType}>
-                    {type}
-                </Text>
-            </View>
+            {children}
         </Animated.View>
     );
 }
@@ -66,22 +57,5 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.10,
         shadowRadius: 16,
-    },
-    cardBody: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    cardFooter: {},
-    cardQuestion: {
-        fontSize: 22,
-        lineHeight: 34,
-        marginTop: 30,
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    cardType: {
-        fontSize: 18,
-        textAlign: 'center',
-        fontWeight: 'bold',
     },
 });

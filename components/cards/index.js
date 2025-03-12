@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ANIM_DURATION, CARD_WIDTH, CARD_HEIGHT } from './constants';
-import Card from './card';
+import CoverCard from './card/cover-card';
+import QuestionCard from './card/question-card';
 
 export default function Cards({ newCard }) {
     const [cardList, setCardList] = useState([]);
@@ -34,8 +35,19 @@ export default function Cards({ newCard }) {
             <View style={styles.cardsBase} />
             {cardList.map((card, index) => {
                 const isSlidingOut = index === 0 && cardList.length > 1;
+
+                if (card.type === 'cover') {
+                    return (
+                        <CoverCard 
+                            key={card.id}
+                            index={index}
+                            isSlidingOut={isSlidingOut}
+                        />
+                    );
+                }
+
                 return (
-                    <Card 
+                    <QuestionCard 
                         key={card.id}
                         index={index}
                         question={card.question} 
